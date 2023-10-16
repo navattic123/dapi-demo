@@ -26,47 +26,77 @@ The idea behind the `todos` directory is that in case you want to create a servi
 - API for a Mobile Application
 
 ## Setup
-
+### Node
 ```bash
 npm install
 ```
 
-## Deploy
-
-In order to deploy the endpoint simply run
-
+### Python environment
 ```bash
-serverless deploy
+brew install pyenv pyenv-virtualenv
+pyenv install 3.9
+cd /path/to/dapi-demo/
+pyenv local 3.9
+python3 -m venv .venv
+.venv/bin/activate
+make setup
+```
+
+## Run locally
+Add the following line to `~/.aws/config`.
+Note: The keys are expired. These are just needed for pynamodb to work locally
+
+```
+    [profile woven_local]
+    # Expired keys used for local development. This is needed to trick
+    # boto into working with `make localserver`
+    aws_access_key_id=ASIA6EUHFPR3BRZQZ6ZT
+    aws_secret_access_key=PlqNw0YiEcKFZ/aQtA0a1Hjvy5Id0jy9FEj1qETe
+```
+
+Run the following to activate the localserver
+```bash
+.venv/bin/activate
+make localserver
 ```
 
 The expected result should be similar to:
 
 ```bash
-Serverless: Packaging service…
-Serverless: Uploading CloudFormation file to S3…
-Serverless: Uploading service .zip file to S3…
-Serverless: Updating Stack…
-Serverless: Checking Stack update progress…
-Serverless: Stack update finished…
+Starting Offline at stage local (us-east-1)
 
-Service Information
-service: serverless-rest-api-with-pynamodb
-stage: dev
-region: us-east-1
-api keys:
-  None
-endpoints:
-  POST - https://45wf34z5yf.execute-api.us-east-1.amazonaws.com/dev/todos
-  GET - https://45wf34z5yf.execute-api.us-east-1.amazonaws.com/dev/todos
-  GET - https://45wf34z5yf.execute-api.us-east-1.amazonaws.com/dev/todos/{id}
-  PUT - https://45wf34z5yf.execute-api.us-east-1.amazonaws.com/dev/todos/{id}
-  DELETE - https://45wf34z5yf.execute-api.us-east-1.amazonaws.com/dev/todos/{id}
-functions:
-  serverless-rest-api-with-pynamodb-dev-update: arn:aws:lambda:us-east-1:488110005556:function:serverless-rest-api-with-pynamodb-dev-update
-  serverless-rest-api-with-pynamodb-dev-get: arn:aws:lambda:us-east-1:488110005556:function:serverless-rest-api-with-pynamodb-dev-get
-  serverless-rest-api-with-pynamodb-dev-list: arn:aws:lambda:us-east-1:488110005556:function:serverless-rest-api-with-pynamodb-dev-list
-  serverless-rest-api-with-pynamodb-dev-create: arn:aws:lambda:us-east-1:488110005556:function:serverless-rest-api-with-pynamodb-dev-create
-  serverless-rest-api-with-pynamodb-dev-delete: arn:aws:lambda:us-east-1:488110005556:function:serverless-rest-api-with-pynamodb-dev-delete
+Offline [http for lambda] listening on http://localhost:3002
+Function names exposed for local invocation by aws-sdk:
+           * create: dapi-demo-local-create
+           * list: dapi-demo-local-list
+           * get: dapi-demo-local-get
+           * update: dapi-demo-local-update
+           * delete: dapi-demo-local-delete
+
+ ┌────────────────────────────────────────────────────────────────────────────┐
+ │                                                                            │
+ │   POST   | http://localhost:3000/local/todos                               │
+ │   POST   | http://localhost:3000/2015-03-31/functions/create/invocations   │
+ │   GET    | http://localhost:3000/local/todos                               │
+ │   POST   | http://localhost:3000/2015-03-31/functions/list/invocations     │
+ │   GET    | http://localhost:3000/local/todos/{todo_id}                     │
+ │   POST   | http://localhost:3000/2015-03-31/functions/get/invocations      │
+ │   PUT    | http://localhost:3000/local/todos/{todo_id}                     │
+ │   POST   | http://localhost:3000/2015-03-31/functions/update/invocations   │
+ │   DELETE | http://localhost:3000/local/todos/{todo_id}                     │
+ │   POST   | http://localhost:3000/2015-03-31/functions/delete/invocations   │
+ │                                                                            │
+ └────────────────────────────────────────────────────────────────────────────┘
+
+Server ready: http://localhost:3000 🚀
+Initializing DynamoDB Local with the following configuration:
+Port:	8000
+InMemory:	true
+DbPath:	null
+SharedDb:	true
+shouldDelayTransientStatuses:	true
+CorsParams:	*
+
 ```
 
 ## Usage
@@ -76,7 +106,7 @@ You can create, retrieve, update, or delete todos with the following commands:
 ### Create a Todo
 
 ```bash
-curl -X POST https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/todos --data '{ "text": "Learn Serverless" }'
+curl -X POST http://localhost:3000/dev/todos --data '{ "text": "Learn Serverless" }'
 ```
 
 No output
@@ -84,7 +114,7 @@ No output
 ### List all Todos
 
 ```bash
-curl https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/todos
+curl http://localhost:3000/dev/todos
 ```
 
 Example output:
@@ -96,7 +126,7 @@ Example output:
 
 ```bash
 # Replace the <id> part with a real id from your todos table
-curl https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/todos/<id>
+curl http://localhost:3000/dev/todos/<id>
 ```
 
 Example Result:
@@ -108,7 +138,7 @@ Example Result:
 
 ```bash
 # Replace the <id> part with a real id from your todos table
-curl -X PUT https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/todos/<id> --data '{ "text": "Learn Serverless", "checked": true }'
+curl -X PUT http://localhost:3000/dev/todos/<id> --data '{ "text": "Learn Serverless", "checked": true }'
 ```
 
 Example Result:
@@ -120,27 +150,7 @@ Example Result:
 
 ```bash
 # Replace the <id> part with a real id from your todos table
-curl -X DELETE https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/todos/<id>
+curl -X DELETE http://localhost:3000/dev/todos/<id>
 ```
 
 No output
-
-## Scaling
-
-### AWS Lambda
-
-By default, AWS Lambda limits the total concurrent executions across all functions within a given region to 100. The default limit is a safety limit that protects you from costs due to potential runaway or recursive functions during initial development and testing. To increase this limit above the default, follow the steps in [To request a limit increase for concurrent executions](http://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html#increase-concurrent-executions-limit).
-
-### DynamoDB
-
-When you create a table, you specify how much provisioned throughput capacity you want to reserve for reads and writes. DynamoDB will reserve the necessary resources to meet your throughput needs while ensuring consistent, low-latency performance. You can change the provisioned throughput and increasing or decreasing capacity as needed.
-
-This is can be done via settings in the `serverless.yml`.
-
-```yaml
-  ProvisionedThroughput:
-    ReadCapacityUnits: 1
-    WriteCapacityUnits: 1
-```
-
-In case you expect a lot of traffic fluctuation we recommend to checkout this guide on how to auto scale DynamoDB [https://aws.amazon.com/blogs/aws/auto-scale-dynamodb-with-dynamic-dynamodb/](https://aws.amazon.com/blogs/aws/auto-scale-dynamodb-with-dynamic-dynamodb/)

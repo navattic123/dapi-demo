@@ -8,11 +8,11 @@ from pynamodb.models import Model
 class TodoModel(Model):
     class Meta:
         table_name = os.environ['DYNAMODB_TABLE']
-        if 'ENV' in os.environ:
+        if os.environ.get('DYNAMODB_LOCAL') == 'true':
+            print('Using local dynamodb')
             host = 'http://localhost:8000'
         else:
-            region = 'eu-central-1'
-            host = 'https://dynamodb.eu-central-1.amazonaws.com'
+            host = None
 
     todo_id = UnicodeAttribute(hash_key=True, null=False)
     text = UnicodeAttribute(null=False)

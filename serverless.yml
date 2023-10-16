@@ -1,9 +1,11 @@
-service: serverless-rest-api-with-pynamodb
+service: dapi-demo
 
 frameworkVersion: "3"
 
 plugins:
   - serverless-python-requirements
+  - serverless-dynamodb
+  - serverless-offline
 
 package:
   exclude:
@@ -16,12 +18,25 @@ package:
     - package-lock.json
     - requirements.txt
 
+custom:
+  serverless-dynamodb:
+    stages:
+      - local
+    start:
+      port: 8000
+      docker: true
+      inMemory: true
+      migrate: true
+      seed: true
+      convertEmptyValues: true
+
 provider:
   name: aws
   runtime: python3.9
-  region: eu-central-1
+  stage: ${opt:stage, "local"}
   environment:
-    DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+    DYNAMODB_TABLE: ${self:service}-${self:provider.stage}
+    DYNAMODB_LOCAL: true
   iam:
     role:
       statements:
@@ -34,7 +49,10 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
             - dynamodb:DescribeTable
-          Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+          Resource:
+            - Fn::GetAtt:
+                - TodosDynamoDbTable
+                - Arn
 
 functions:
   create:
