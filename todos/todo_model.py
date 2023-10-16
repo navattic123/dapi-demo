@@ -9,7 +9,6 @@ class TodoModel(Model):
     class Meta:
         table_name = os.environ['DYNAMODB_TABLE']
         if os.environ.get('DYNAMODB_LOCAL') == 'true':
-            print('Using local dynamodb')
             host = 'http://localhost:8000'
         else:
             host = None
