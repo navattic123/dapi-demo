@@ -5,11 +5,18 @@ description = ""
 authors = ["Your Name <you@example.com>"]
 license = "MIT"
 readme = "README.md"
+packages = [{include = "todos"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
 pynamodb = "^5.5.0"
 
+[tool.poetry.dev-dependencies]
+opendapi = { git = "https://github.com/WovenCollab/OpenDAPI.git", subdirectory = "client/python" }
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
+pytest-cov = "^4.0.0"
 
 [build-system]
 requires = ["poetry-core"]
