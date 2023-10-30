@@ -1,0 +1,23 @@
+name: OpenDAPI CI
+# Invoke for every Pull Request and push to main branch
+on:
+  pull_request:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - name: DAPI CI Action
+      uses: WovenCollab/OpenDAPI/actions/dapi_ci@main
+      with:
+        # Store credentials in Github Repo secrets
+        DAPI_SERVER_HOST: https://api.wovencollab.com
+        DAPI_SERVER_API_KEY: ${{ secrets.DAPI_SERVER_API_KEY }}
+
+        # Configure when DAPIs should be registered.
+        # PRs do not register but only validate
+        MAINLINE_BRANCH_NAME: "main"
+        REGISTER_ON_MERGE_TO_MAINLINE: True
