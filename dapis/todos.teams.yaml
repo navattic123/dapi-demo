@@ -5,5 +5,5 @@ organization:
 teams:
 - urn: todos.teams.engineering
   name: Engineering
-  domain: Placeholder - Please correct
+  domain: Engineering
   email: grp.Engineering@todos-inc.com

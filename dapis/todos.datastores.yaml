@@ -4,9 +4,9 @@ datastores:
   type: dynamodb
   host:
     env_prod:
-      location: Placeholder - Please correct
+      location: arn:aws:dynamodb:us-east-1:xxxxxxxxxxxx
 - urn: todos.datastores.snowflake
   type: snowflake
   host:
     env_prod:
-      location: Placeholder - Please correct
+      location: arn:aws:dynamodb:us-east-1:xxxxxxxxxxxx

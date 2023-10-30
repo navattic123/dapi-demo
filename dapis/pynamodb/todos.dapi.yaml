@@ -1,8 +1,8 @@
 schema: https://opendapi.org/spec/0-0-1/dapi.json
 urn: todos.dapis.todos
 type: entity
-description: Placeholder - Please correct
-owner_team_urn: Placeholder - Please correct
+description: Todos app core model
+owner_team_urn: todos.team.engineering
 datastores:
   producers:
   - urn: todos.datastores.dynamodb
@@ -17,33 +17,33 @@ datastores:
 fields:
 - name: checked
   data_type: boolean
-  description: Placeholder - Please correct
+  description: Indicates if a todo is completed
   is_nullable: false
-  is_pii: true
+  is_pii: false
   share_status: unstable
 - name: createdAt
   data_type: string
-  description: Placeholder - Please correct
+  description: datetime when this entry was created
   is_nullable: false
-  is_pii: true
+  is_pii: false
   share_status: unstable
 - name: text
   data_type: string
-  description: Placeholder - Please correct
+  description: The entry for the todo action
   is_nullable: false
   is_pii: true
   share_status: unstable
 - name: todo_id
   data_type: string
-  description: Placeholder - Please correct
+  description: Publicly used identifier for the todo entry
   is_nullable: false
-  is_pii: true
+  is_pii: false
   share_status: unstable
 - name: updatedAt
   data_type: string
-  description: Placeholder - Please correct
+  description: datetime when this entry was updated
   is_nullable: false
-  is_pii: true
+  is_pii: false
   share_status: unstable
 primary_key:
 - todo_id
