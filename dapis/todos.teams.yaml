@@ -1,0 +1,9 @@
+schema: https://opendapi.org/spec/0-0-1/teams.json
+organization:
+  name: Todos
+  slack_teams: []
+teams:
+- urn: todos.teams.engineering
+  name: Engineering
+  domain: Placeholder - Please correct
+  email: grp.Engineering@todos-inc.com

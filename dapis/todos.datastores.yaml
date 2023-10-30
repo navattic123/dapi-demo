@@ -1,0 +1,12 @@
+schema: https://opendapi.org/spec/0-0-1/datastores.json
+datastores:
+- urn: todos.datastores.dynamodb
+  type: dynamodb
+  host:
+    env_prod:
+      location: Placeholder - Please correct
+- urn: todos.datastores.snowflake
+  type: snowflake
+  host:
+    env_prod:
+      location: Placeholder - Please correct
