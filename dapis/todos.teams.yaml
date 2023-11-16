@@ -1,7 +1,8 @@
 schema: https://opendapi.org/spec/0-0-1/teams.json
 organization:
   name: Todos
-  slack_teams: []
+  slack_teams:
+  - T05T7H76Q6T
 teams:
 - urn: todos.teams.engineering
   name: Engineering

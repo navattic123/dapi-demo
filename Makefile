@@ -41,7 +41,7 @@ deploy:
 		-s $(stage)													\
 		${DEPLOY_OPTIONS}
 
-test:
+test: requirements
 	poetry run pytest -s -vv
 
 .PHONY: serverless requirements setup localserver deploy test
