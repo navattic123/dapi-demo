@@ -1,4 +1,4 @@
-name: OpenDAPI CI
+name: Woven OpenDAPI CI
 # Invoke for every Pull Request and push to main branch
 on:
   pull_request:
@@ -15,8 +15,8 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-    - name: DAPI CI Action
-      uses: WovenCollab/OpenDAPI/actions/dapi_ci@main
+    - name: Woven DAPI CI
+      uses: WovenCollab/OpenDAPI/actions/dapi_ci@stable
       with:
         # Store credentials in Github Repo secrets
         DAPI_SERVER_HOST: https://api.wovencollab.com
