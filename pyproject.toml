@@ -9,7 +9,7 @@ packages = [{include = "todos"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-pynamodb = "^5.5.0"
+pynamodb = "^5.5.1"
 
 [tool.poetry.dev-dependencies]
 opendapi = { git = "https://github.com/WovenCollab/OpenDAPI.git", subdirectory = "client/python" }
