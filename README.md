@@ -11,6 +11,6 @@ Woven seamlessly brings AI to your CI/CD to empower Engineering orgs create self
 
 Here is a introductory video:
 
-[![Watch the video](https://img.youtube.com/vi/yYkpjq50rGs/maxresdefault.jpg)](https://youtu.be/yYkpjq50rGs)
+[![Watch the video](https://img.youtube.com/vi/drc170LiS5E/maxresdefault.jpg)](https://youtu.be/drc170LiS5E)
 
 Check out [wovencollab.com](https://wovencollab.com) and [opendapi.org](https://opendapi.org) for more information.
