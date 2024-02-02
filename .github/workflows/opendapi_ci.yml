@@ -15,9 +15,24 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-    - name: Woven DAPI CI
-      uses: WovenCollab/OpenDAPI/actions/dapi_ci@stable
+    - name: Checkout repository
+      uses: actions/checkout@v4
       with:
+        fetch-depth: 0
+        # Checkout the correct branch instead of detached HEAD
+        ref: ${{ github.event.pull_request.head.ref || github.ref }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Woven DAPI CI
+      shell: bash
+      run: |
+        pip install opendapi
+        dapi_ci_github
+      env:
         # Store credentials in Github Repo secrets
         DAPI_SERVER_HOST: https://api.wovencollab.com
         DAPI_SERVER_API_KEY: ${{ secrets.DAPI_SERVER_API_KEY }}
@@ -26,3 +41,4 @@ jobs:
         # PRs do not register but only validate
         MAINLINE_BRANCH_NAME: "main"
         REGISTER_ON_MERGE_TO_MAINLINE: True
+        GITHUB_TOKEN: ${{ github.token }}

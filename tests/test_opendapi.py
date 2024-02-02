@@ -3,9 +3,7 @@
 import os
 from typing import Dict
 
-from opendapi.defs import OPENDAPI_SPEC_URL
 from opendapi.utils import get_root_dir_fullpath
-from opendapi.validators.dapi import DapiValidator
 from opendapi.validators.runner import Runner
 
 # In the demo app, we are importing the pynamodb base model. In real-world
@@ -16,7 +14,11 @@ from pynamodb.models import Model
 class TodosDapiRunner(Runner):
     """Demo App DAPI Runner"""
 
-    REPO_ROOT_DIR_PATH = get_root_dir_fullpath(__file__, "dapi-demo")
+    REPO_ROOT_DIR_PATH = (
+        get_root_dir_fullpath(__file__, "dapi-demo")
+        if "dapi-demo-private" not in __file__
+        else get_root_dir_fullpath(__file__, "dapi-demo-private")
+    )
     DAPIS_DIR_PATH = os.path.join(REPO_ROOT_DIR_PATH, "dapis")
 
     ORG_NAME = "Todos"
