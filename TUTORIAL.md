@@ -68,13 +68,13 @@ If you notice, we did not run `make test` to generate the dapi files. Let us do 
    ...
       is_nullable: false
       is_pii: false
-      share_status: unstable
+      access: private
    +- name: user_id
    +  data_type: string
    +  description: Placeholder - Please correct
    +  is_nullable: false
    +  is_pii: true
-   +  share_status: unstable
+   +  access: private
   ```
 
 As you can see, the dapi file has been updated to reflect the model change.
@@ -118,7 +118,7 @@ index 1213a24..8c82940 100644
 -  is_nullable: false
 +  is_nullable: true
    is_pii: true
-   share_status: unstable
+   access: private
  - name: todo_id
 ```
 
