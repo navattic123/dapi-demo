@@ -32,9 +32,9 @@ class TodosDapiRunner(Runner):
     }
 
     PYNAMODB_TABLES_BASE_CLS = Model
-    PYNAMODB_PRODUCER_DATASTORE_NAME = "dynamodb"
-    PYNAMODB_CONSUMER_SNOWFLAKE_DATASTORE_NAME = "snowflake"
-    PYNAMODB_CONSUMER_SNOWFLAKE_IDENTIFIER_MAPPER = lambda self, table_name: (
+    PYNAMODB_SOURCE_DATASTORE_NAME = "dynamodb"
+    PYNAMODB_SINK_SNOWFLAKE_DATASTORE_NAME = "snowflake"
+    PYNAMODB_SINK_SNOWFLAKE_IDENTIFIER_MAPPER = lambda self, table_name: (
         "todos.dynamodb",
         f"production_{table_name}",
     )

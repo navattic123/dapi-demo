@@ -4,12 +4,12 @@ type: entity
 description: Todos app core model
 owner_team_urn: todos.team.engineering
 datastores:
-  producers:
+  sources:
   - urn: todos.datastores.dynamodb
     data:
       identifier: todos
       namespace: ''
-  consumers:
+  sinks:
   - urn: todos.datastores.snowflake
     data:
       identifier: PRODUCTION_TODOS
@@ -20,30 +20,34 @@ fields:
   description: Indicates if a todo is completed
   is_nullable: false
   is_pii: false
-  share_status: unstable
+  access: private
 - name: createdAt
   data_type: string
   description: datetime when this entry was created
   is_nullable: false
   is_pii: false
-  share_status: unstable
+  access: private
 - name: text
   data_type: string
   description: The entry for the todo action
   is_nullable: false
   is_pii: true
-  share_status: unstable
+  access: private
 - name: todo_id
   data_type: string
   description: Publicly used identifier for the todo entry
   is_nullable: false
   is_pii: false
-  share_status: unstable
+  access: private
 - name: updatedAt
   data_type: string
   description: datetime when this entry was updated
   is_nullable: false
   is_pii: false
-  share_status: unstable
+  access: private
 primary_key:
 - todo_id
+context:
+  service: todos.todo_model
+  integration: pynamodb
+  rel_model_path: ../../../todos/todo_model.py
