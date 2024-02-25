@@ -1,11 +1,16 @@
-name: Woven OpenDAPI CI
-# Invoke for every Pull Request and push to main branch
+# This workflow is executed as part of CI/CD on Github.
+# It runs OpenDAPI to validate and suggest improvements to data documentation.
+
+name: Woven Demo OpenDAPI CI
 on:
+  # Invoke for every Pull Request and push to main branch
   pull_request:
   push:
     branches:
       - 'main'
 
+
+# Allows this action to create PRs to suggest DAPI improvements
 permissions:
   contents: write
   pull-requests: write
@@ -18,8 +23,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
+        # Fetch all branches and history to help create a suggestion PR
         fetch-depth: 0
-        # Checkout the correct branch instead of detached HEAD
+        # Checkout the working branch for PRs instead of merge branch
         ref: ${{ github.event.pull_request.head.ref || github.ref }}
 
     - name: Set up Python
@@ -27,18 +33,36 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Woven DAPI CI
+    - name: Run OpenDAPI generation prerequisites
+      run: |
+        echo "Running DAPI generation prerequisites"
+        make test
+        # example: run DBT docs generation, pynamodb tests, etc
+        # cd /path/to/dbt/package
+        # make requirements
+        # dbt run --target ci --profiles-dir .github/dbt
+        # dbt docs generate --target ci --profiles-dir .github/dbt
+
+    - name: OpenDAPI CI
       shell: bash
       run: |
+        # Back to root of the repository
+        cd ${{ github.workspace }}
         pip install opendapi
-        dapi_ci_github
+        opendapi run
+
       env:
-        # Store credentials in Github Repo secrets
-        DAPI_SERVER_HOST: https://api.wovencollab.com
+        DAPI_SERVER_HOST: 'https://api.wovencollab.com'
+
+        # Store credentials in Github as a secret
         DAPI_SERVER_API_KEY: ${{ secrets.DAPI_SERVER_API_KEY }}
 
         # Configure when DAPIs should be registered.
-        # PRs do not register but only validate
+        # PRs do not register but only validate and provide suggestions
+
         MAINLINE_BRANCH_NAME: "main"
+
         REGISTER_ON_MERGE_TO_MAINLINE: True
+
+        # Github token to create PRs for DAPI suggestions
         GITHUB_TOKEN: ${{ github.token }}

@@ -1,53 +1,54 @@
 schema: https://opendapi.org/spec/0-0-1/dapi.json
-urn: todos.dapis.todos
+urn: woven_demo.dapis.todos
+owner_team_urn: placeholder text
+description: A dataset containing information about to-do items, including their status,
+  creation and update timestamps, and text description.
 type: entity
-description: Todos app core model
-owner_team_urn: todos.team.engineering
 datastores:
   sources:
-  - urn: todos.datastores.dynamodb
+  - urn: woven_demo.datastores.dynamodb
     data:
       identifier: todos
       namespace: ''
   sinks:
-  - urn: todos.datastores.snowflake
+  - urn: woven_demo.datastores.snowflake
     data:
       identifier: PRODUCTION_TODOS
       namespace: TODOS.DYNAMODB
+primary_key:
+- todo_id
 fields:
 - name: checked
   data_type: boolean
-  description: Indicates if a todo is completed
+  description: Indicates whether the to-do item has been completed or not.
   is_nullable: false
   is_pii: false
   access: private
 - name: createdAt
   data_type: string
-  description: datetime when this entry was created
+  description: Timestamp indicating when the to-do item was created.
   is_nullable: false
   is_pii: false
   access: private
 - name: text
   data_type: string
-  description: The entry for the todo action
+  description: The text description of the to-do item.
   is_nullable: false
   is_pii: true
   access: private
 - name: todo_id
   data_type: string
-  description: Publicly used identifier for the todo entry
+  description: Unique identifier for the to-do item.
   is_nullable: false
-  is_pii: false
+  is_pii: true
   access: private
 - name: updatedAt
   data_type: string
-  description: datetime when this entry was updated
+  description: Timestamp indicating the last update time of the to-do item.
   is_nullable: false
   is_pii: false
   access: private
-primary_key:
-- todo_id
 context:
   service: todos.todo_model
   integration: pynamodb
-  rel_model_path: ../../../todos/todo_model.py
+  rel_model_path: ../../todos/todo_model.py

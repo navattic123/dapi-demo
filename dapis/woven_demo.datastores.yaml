@@ -1,5 +1,15 @@
 schema: https://opendapi.org/spec/0-0-1/datastores.json
 datastores:
+- urn: woven_demo.datastores.dynamodb
+  type: dynamodb
+  host:
+    env_prod:
+      location: placeholder text
+- urn: woven_demo.datastores.snowflake
+  type: snowflake
+  host:
+    env_prod:
+      location: placeholder text
 - urn: todos.datastores.dynamodb
   type: dynamodb
   host:
@@ -10,3 +20,5 @@ datastores:
   host:
     env_prod:
       location: arn:aws:dynamodb:us-east-1:xxxxxxxxxxxx
+
+# Add more datastores here

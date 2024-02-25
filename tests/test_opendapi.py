@@ -21,8 +21,8 @@ class TodosDapiRunner(Runner):
     )
     DAPIS_DIR_PATH = os.path.join(REPO_ROOT_DIR_PATH, "dapis")
 
-    ORG_NAME = "Todos"
-    ORG_EMAIL_DOMAIN = "todos-inc.com"
+    ORG_NAME = "Woven Demo"
+    ORG_EMAIL_DOMAIN = "wovencollab.com"
     ORG_SLACK_TEAM = "T054K66G3J4"
 
     SEED_TEAMS_NAMES = ["Engineering"]

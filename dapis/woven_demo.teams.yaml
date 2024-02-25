@@ -1,0 +1,27 @@
+schema: https://opendapi.org/spec/0-0-1/teams.json
+organization:
+  name: Woven Demo
+  slack_teams:
+  - T05T7H76Q6T
+teams:
+- urn: woven_demo.teams.engineering
+  name: engineering
+  domain: placeholder text
+  email: grp.engineering@wovencollab.com
+- urn: woven_demo.teams.team_one
+  name: TeamOne
+  domain: Engineering
+  email: grp.teamone@wovencollab.com
+  # Optional fields
+  manager_email: manager@wovencollab.com
+  slack_channl_id: C123456
+  github_team: org/team-one
+
+- urn: woven_demo.teams.team_two
+  name: TeamTwo
+  domain: Analytics
+  email: grp.teamtwo@wovencollab.com
+  # Optional fields
+  manager_email: manager@wovencollab.com
+  slack_channl_id: C123456
+  github_team: org/team-two
