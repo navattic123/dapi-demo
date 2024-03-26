@@ -10,6 +10,8 @@ datastores:
   host:
     env_prod:
       location: placeholder text
+      username: plaintext:dummy_user
+      password: aws_secretsmanager:arn:aws:secretsmanager:us-east-1:373685220562:secret:DAPI_DEMO_SNOWFLAKE_PASSWORD-OKnmtH
 - urn: todos.datastores.dynamodb
   type: dynamodb
   host:
