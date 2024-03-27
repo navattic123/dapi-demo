@@ -1,0 +1,65 @@
+schema: https://opendapi.org/spec/0-0-1/dapi.json
+urn: woven_demo.dapis.todo_update_log
+owner_team_urn: placeholder text
+description: This data model captures the log of updates made to todo items.
+type: entity
+datastores:
+  sources:
+  - urn: woven_demo.datastores.dynamodb
+    data:
+      identifier: todo_update_log
+      namespace: ''
+  sinks:
+  - urn: woven_demo.datastores.snowflake
+    data:
+      identifier: PRODUCTION_TODO_UPDATE_LOG
+      namespace: TODOS.DYNAMODB
+primary_key:
+- update_id
+context:
+  service: todos.todo_update_log_model
+  integration: pynamodb
+  rel_model_path: ../../todos/todo_update_log_model.py
+fields:
+- name: action_id
+  data_type: string
+  description: Identifies the specific action in the update log.
+  is_nullable: false
+  is_pii: false
+  access: private
+- name: action_type
+  data_type: string
+  description: Specifies the type of action performed in the update log.
+  is_nullable: false
+  is_pii: false
+  access: private
+- name: createdAt
+  data_type: string
+  description: Indicates the date and time when the update log entry was created.
+  is_nullable: false
+  is_pii: false
+  access: private
+- name: todo_id
+  data_type: string
+  description: Uniquely identifies the todo item associated with the update log entry.
+  is_nullable: false
+  is_pii: false
+  access: private
+- name: update_id
+  data_type: string
+  description: Unique identifier for each update entry in the log.
+  is_nullable: false
+  is_pii: false
+  access: private
+- name: updatedAt
+  data_type: string
+  description: Shows the date and time when the update log entry was last updated.
+  is_nullable: false
+  is_pii: false
+  access: private
+- name: user_id
+  data_type: string
+  description: Identifies the user responsible for the update in the log.
+  is_nullable: false
+  is_pii: true
+  access: private
