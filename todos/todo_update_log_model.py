@@ -16,6 +16,7 @@ class TodoUpdateLogModel(Model):
     update_id = UnicodeAttribute(hash_key=True, null=False)
     todo_id = UnicodeAttribute(null=False)
     action_id = UnicodeAttribute(null=False)
+    action_type = UnicodeAttribute(null=False)
     createdAt = UTCDateTimeAttribute(null=False, default=datetime.now())
     updatedAt = UTCDateTimeAttribute(null=False)
     user_id = UnicodeAttribute(hash_key=False, null=False)
