@@ -1,59 +1,59 @@
 schema: https://opendapi.org/spec/0-0-1/dapi.json
-urn: woven_demo.dapis.todos
-owner_team_urn: placeholder text
 description: A dataset containing information about to-do items, including their status,
   creation and update timestamps, and text description.
+owner_team_urn: placeholder text
 type: entity
-datastores:
-  sources:
-  - urn: woven_demo.datastores.dynamodb
-    data:
-      identifier: todos
-      namespace: ''
-  sinks:
-  - urn: woven_demo.datastores.snowflake
-    data:
-      identifier: PRODUCTION_TODOS
-      namespace: TODOS.DYNAMODB
+urn: woven_demo.dapis.todos
 primary_key:
 - todo_id
 fields:
-- name: is_checked
-  data_type: boolean
-  description: Indicates whether the to-do item has been completed or not.
-  is_nullable: false
-  is_pii: false
-  access: private
-- name: createdAt
-  data_type: string
-  description: Timestamp indicating when the to-do item was created.
-  is_nullable: false
-  is_pii: false
-  access: private
-- name: text
-  data_type: string
-  description: The text description of the to-do item.
-  is_nullable: false
-  is_pii: true
-  access: private
-- name: todo_id
-  data_type: string
-  description: Unique identifier for the to-do item.
-  is_nullable: false
-  is_pii: true
-  access: private
-- name: updatedAt
-  data_type: string
-  description: Timestamp indicating the last update time of the to-do item.
-  is_nullable: false
-  is_pii: false
-  access: private
 - name: assignee_email
   data_type: string
-  description: The email address of the assignee for the to-do item
   is_nullable: false
   is_pii: true
   access: private
+  description: The email address of the assignee for the to-do item.
+- name: createdAt
+  data_type: string
+  is_nullable: false
+  is_pii: false
+  access: private
+  description: Timestamp indicating the creation time of the to-do item.
+- name: is_checked
+  data_type: boolean
+  is_nullable: false
+  is_pii: false
+  access: private
+  description: Indicates whether the to-do item has been completed or not.
+- name: text
+  data_type: string
+  is_nullable: false
+  is_pii: true
+  access: private
+  description: The text description of the to-do item.
+- name: todo_id
+  data_type: string
+  is_nullable: false
+  is_pii: true
+  access: private
+  description: Unique identifier for the to-do item.
+- name: updatedAt
+  data_type: string
+  is_nullable: false
+  is_pii: false
+  access: private
+  description: Timestamp indicating the last update time of the to-do item.
+datastores:
+  sources:
+  - data:
+      identifier: todos
+      namespace: ''
+    urn: woven_demo.datastores.dynamodb
+  sinks:
+  - data:
+      identifier: PRODUCTION_TODOS
+      namespace: TODOS.DYNAMODB
+    urn: woven_demo.datastores.snowflake
 context:
   service: todos.todo_model
   integration: pynamodb
