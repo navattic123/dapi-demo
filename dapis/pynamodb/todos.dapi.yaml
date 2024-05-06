@@ -18,7 +18,7 @@ datastores:
 primary_key:
 - todo_id
 fields:
-- name: checked
+- name: is_checked
   data_type: boolean
   description: Indicates whether the to-do item has been completed or not.
   is_nullable: false
@@ -47,6 +47,12 @@ fields:
   description: Timestamp indicating the last update time of the to-do item.
   is_nullable: false
   is_pii: false
+  access: private
+- name: assignee_email
+  data_type: string
+  description: The email address of the assignee for the to-do item
+  is_nullable: false
+  is_pii: true
   access: private
 context:
   service: todos.todo_model
