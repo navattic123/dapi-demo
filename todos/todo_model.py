@@ -14,7 +14,7 @@ class TodoModel(Model):
             host = None
 
     todo_id = UnicodeAttribute(hash_key=True, null=False)
-    text = UnicodeAttribute(null=False)
+    user_id = UnicodeAttribute(hash_key=False, null=False)
     is_checked = BooleanAttribute(null=False)
     createdAt = UTCDateTimeAttribute(null=False, default=datetime.now())
     updatedAt = UTCDateTimeAttribute(null=False)
